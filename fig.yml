@@ -1,0 +1,57 @@
+zookeeperdc1:
+    image: jplock/zookeeper
+    ports:
+        - 2181
+
+zookeeperdc2:
+    image: jplock/zookeeper
+    ports:
+        - 2181
+
+kafkadc1:
+    image: wurstmeister/kafka:0.8.2-beta
+    ports:
+        - 9092
+    links:
+        - zookeeperdc1:zk
+    environment:
+        KAFKA_ADVERTISED_HOST_NAME: 172.16.204.44
+        KAFKA_CONTROLLED_SHUTDOWN_ENABLE: 'false'
+        KAFKA_NUM_PARTITIONS: 8
+        KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+        KAFKA_REBALANCE_BACKOFF_MS: 3000
+        KAFKA_REBALANCE_MAX_RETRIES: 10
+        KAFKA_DELETE_TOPIC_ENABLE: 'true'
+        KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+
+kafkadc2:
+    image: wurstmeister/kafka:0.8.2-beta
+    ports:
+        - 9092
+    links:
+        - zookeeperdc2:zk
+    environment:
+        KAFKA_ADVERTISED_HOST_NAME: 172.16.204.44
+        KAFKA_CONTROLLED_SHUTDOWN_ENABLE: 'false'
+        KAFKA_NUM_PARTITIONS: 8
+        KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+        KAFKA_REBALANCE_BACKOFF_MS: 3000
+        KAFKA_REBALANCE_MAX_RETRIES: 10
+        KAFKA_DELETE_TOPIC_ENABLE: 'true'
+        KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+
+mirrormakerdc2todc1:
+    build: .
+    links:
+        - zookeeperdc2:zk
+        - kafkadc1:kafka
+    environment:
+        KAFKA_ADVERTISED_HOST_NAME: 172.16.204.44
+        WHITELIST: 'MM-.*'
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+
