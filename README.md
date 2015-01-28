@@ -9,8 +9,8 @@ Docker setup for apache kafka mirrormaker
 - fig
 
 # Setup
- - Modify all KAFKA_ADVERTISED_HOST_NAME in fig.yml to match the IP address of the host machine running docker. see [kafka-docker](https://github.com/wurstmeister/kafka-docker) for more info
- - Whitelist of mirrormaker is specified as WHITELIST in fig.yml. For test it is set to 'MM-.\*'
+ - Modify all `KAFKA_ADVERTISED_HOST_NAME` in `fig.yml` to match the IP address of the host machine running docker. see [kafka-docker](https://github.com/wurstmeister/kafka-docker) for more info
+ - Whitelist of mirrormaker is specified as `WHITELIST` in `fig.yml`. For test it is set to 'MM-.\*'
  - Change files ./image-files/\*.config to suit your requirements
 
 
