@@ -1,7 +1,7 @@
 *NOTE: This work is derived out of work by wurstmeister at [wurstmeister/kafka-docker](https://github.com/wurstmeister/kafka-docker)*
 
 # mirrormaker-docker
-Docker setup for apache kafka mirrormaker 
+Docker setup for apache kafka mirrormaker
 
 # Requirements
 - Docker
@@ -27,12 +27,12 @@ This will start two kakfa clusters, dc1 and dc2 and a mirrormaker that will repl
 * Start a consumer in DC1
 ```sh
 $> docker-enter mirrormakerdocker_kafkadc1_1
-$> /opt/kafka_2.9.1-0.8.2-beta/bin/kafka-console-consumer.sh --zookeeper=$ZK_PORT_2181_TCP_ADDR:$ZK_PORT_2181_TCP_PORT --from-beginning --topic MM-TEST
+$> /opt/kafka_2.10-0.8.2.0/bin/kafka-console-consumer.sh --zookeeper=$ZK_PORT_2181_TCP_ADDR:$ZK_PORT_2181_TCP_PORT --from-beginning --topic MM-TEST
 ```
 * Start a producer in DC2 (in another terminal)
 ```sh
 $> docker-enter mirrormakerdocker_kafkadc2_1
-$> /opt/kafka_2.9.1-0.8.2-beta/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic MM-TEST
+$> /opt/kafka_2.10-0.8.2.0/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic MM-TEST
 ```
 
 # Stopping the cluster
